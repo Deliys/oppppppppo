@@ -25,6 +25,9 @@ opppppo1.py:55:0: R0912: Too many branches (13/12) (too-many-branches)
 ------------------------------------------------------------------
 
 Your code has been rated at 7.38/10 (previous run: 7.38/10, +0.00)
+
+------------------------------------------------------------------
+
 ************* Module opppppo3
 opppppo3.py:143:0: C0305: Trailing newlines (trailing-newlines)
 opppppo3.py:1:0: C0114: Missing module docstring (missing-module-docstring)
@@ -39,4 +42,7 @@ opppppo3.py:42:0: R0903: Too few public methods (1/2) (too-few-public-methods)
 opppppo3.py:97:0: R0912: Too many branches (13/12) (too-many-branches)
 
 ------------------------------------------------------------------
+
 Your code has been rated at 8.69/10 (previous run: 8.69/10, +0.00)
+
+------------------------------------------------------------------
