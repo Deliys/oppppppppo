@@ -26,7 +26,7 @@ opppppo1.py:31:0: C0116: Missing function or method docstring (missing-function-
 opppppo1.py:38:0: C0116: Missing function or method docstring (missing-function-docstring)\
 opppppo1.py:50:0: C0116: Missing function or method docstring (missing-function-docstring)\
 opppppo1.py:55:0: C0116: Missing function or method docstring (missing-function-docstring)\
-opppppo1.py:55:0: R0912: Too many branches (13/12) (too-many-branches)\
+opppppo1.py:55:0: R0912: Too many branches (13/12) (too-many-branches)
 
 ------------------------------------------------------------------
 
