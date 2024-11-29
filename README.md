@@ -45,7 +45,7 @@ opppppo3.py:38:14: C0209: Formatting a regular string which could be an f-string
 opppppo3.py:28:0: R0903: Too few public methods (1/2) (too-few-public-methods)\
 opppppo3.py:52:14: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)\
 opppppo3.py:42:0: R0903: Too few public methods (1/2) (too-few-public-methods)\
-opppppo3.py:97:0: R0912: Too many branches (13/12) (too-many-branches)\
+opppppo3.py:97:0: R0912: Too many branches (13/12) (too-many-branches)
 
 ------------------------------------------------------------------
 
