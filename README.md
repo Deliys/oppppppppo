@@ -21,6 +21,7 @@ opppppo1.py:38:0: C0116: Missing function or method docstring (missing-function-
 opppppo1.py:50:0: C0116: Missing function or method docstring (missing-function-docstring)
 opppppo1.py:55:0: C0116: Missing function or method docstring (missing-function-docstring)
 opppppo1.py:55:0: R0912: Too many branches (13/12) (too-many-branches)
+
 ------------------------------------------------------------------
 
 Your code has been rated at 7.38/10 (previous run: 7.38/10, +0.00)
@@ -36,5 +37,6 @@ opppppo3.py:28:0: R0903: Too few public methods (1/2) (too-few-public-methods)
 opppppo3.py:52:14: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
 opppppo3.py:42:0: R0903: Too few public methods (1/2) (too-few-public-methods)
 opppppo3.py:97:0: R0912: Too many branches (13/12) (too-many-branches)
+
 ------------------------------------------------------------------
 Your code has been rated at 8.69/10 (previous run: 8.69/10, +0.00)
