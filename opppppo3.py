@@ -1,143 +1,91 @@
-import json
 class OfficeFurniture:
-    """Базовый класс для офисной мебели."""
-
+    """основа фигуры"""
     def __init__(self, price, manufacturer):
         self.price = price
         self.manufacturer = manufacturer
-
     def print_info(self):
-        """Метод для печати информации о мебели."""
         pass
 
-
 class Table(OfficeFurniture):
-    """Класс для стола."""
-
+    "столик"
     def __init__(self, price, manufacturer, material, shape):
         super().__init__(price, manufacturer)
         self.material = material
         self.shape = shape
 
     def print_info(self):
-        """Печатает информацию о столе."""
-        print("Стол: Материал: {}, Форма: {}, Цена: {}, Производитель: {}".format(
-            self.material, self.shape, self.price, self.manufacturer))
-
+        print(f"Стол: Материал: {self.material},\
+                Форма: {self.shape}, Цена: {self.price},\
+                Производитель: {self.manufacturer}")
 
 class Chair(OfficeFurniture):
-    """Класс для стула."""
-
+    """стул"""
     def __init__(self, price, manufacturer, material, adjustable_height):
         super().__init__(price, manufacturer)
         self.material = material
         self.adjustable_height = adjustable_height
 
     def print_info(self):
-        """Печатает информацию о стуле."""
-        print("Стул: Материал: {}, Регулируемая высота: {}, Цена: {}, Производитель: {}".format(
-            self.material, self.adjustable_height, self.price, self.manufacturer))
-
+        print(f"Стул: Материал: {self.material},\
+                Регулируемая высота: {self.adjustable_height},\
+                Цена: {self.price}, Производитель: {self.manufacturer}")
 
 class Cabinet(OfficeFurniture):
-    """Класс для шкафа."""
-
+    """шкаф"""
     def __init__(self, price, manufacturer, num_shelves, material):
         super().__init__(price, manufacturer)
         self.num_shelves = num_shelves
         self.material = material
 
     def print_info(self):
-        """Печатает информацию о шкафе."""
-        print("Шкаф: Количество полок: {}, Материал: {}, Цена: {}, Производитель: {}".format(
-            self.num_shelves, self.material, self.price, self.manufacturer))
+        print(f"Шкаф: Количество полок: {self.num_shelves},\
+                Материал: {self.material},\
+                Цена: {self.price},\
+                Производитель: {self.manufacturer}")
 
+def parse_command(library, command):
+    """парсер команд из файлика"""
+    parts = command.split()
+    if parts[0] == "ADD":
+        if parts[1] == "TABLE":
+            library.append(Table(int(parts[2]), parts[3], parts[4], parts[5]))
+        elif parts[1] == "CHAIR":
+            library.append(Chair(int(parts[2]), parts[3], parts[4], parts[5] == "TRUE"))
+        elif parts[1] == "CABINET":
+            library.append(Cabinet(int(parts[2]), parts[3], int(parts[4]), parts[5]))
+        else:
+            print("Неизвестный тип мебели.")
+    elif parts[0] == "REM":
+        if parts[1] == "TABLE":
+            library = [furniture for furniture in library if not (isinstance(furniture, Table) and furniture.price == int(parts[2]))]
+        elif parts[1] == "CHAIR":
+            library = [furniture for furniture in library if not (isinstance(furniture, Chair) and furniture.price == int(parts[2]))]
+        elif parts[1] == "CABINET":
+            library = [furniture for furniture in library if not (isinstance(furniture, Cabinet) and furniture.price == int(parts[2]))]
+        else:
+            print("Неизвестный тип мебели.")
+    elif parts[0] == "PRINT":
+        for index, furniture in enumerate(library):
+            print(f"{index}. ", end="")
+            furniture.print_info()
+        print(f"Всего предметов: {len(library)}")
+    return library
 
-def print_furniture(library):
-    """Печатает информацию о всей мебели в библиотеке."""
+def read_commands(file_path):
+    """читалка команд из файла"""
+    library = []
+    with open(file_path, 'r', encoding='utf-8') as file:
+        for line in file:
+            library = parse_command(library, line.strip())
+    return library
+
+def main():
+    library = read_commands("commands.txt")
+    print("Результат:")
     for index, furniture in enumerate(library):
         print(f"{index}. ", end="")
         furniture.print_info()
     print(f"Всего предметов: {len(library)}")
 
-
-def add_furniture(library, new_furniture):
-    """Добавляет новую мебель в библиотеку."""
-    if new_furniture["type"] == "table":
-        furniture = Table(
-            new_furniture["price"],
-            new_furniture["manufacturer"],
-            new_furniture["material"],
-            new_furniture["shape"])
-    elif new_furniture["type"] == "chair":
-        furniture = Chair(
-            new_furniture["price"],
-            new_furniture["manufacturer"],
-            new_furniture["material"],
-            new_furniture["adjustable_height"])
-    elif new_furniture["type"] == "cabinet":
-        furniture = Cabinet(
-            new_furniture["price"],
-            new_furniture["manufacturer"],
-            new_furniture["num_shelves"],
-            new_furniture["material"])
-    else:
-        print("Неизвестный тип мебели.")
-        return
-    library.append(furniture)
-
-
-def load_furniture_from_json(file_path):
-    """Загружает данные о мебели из JSON файла."""
-    with open(file_path, 'r', encoding='utf-8') as file:
-        data = json.load(file)
-    return data
-
-
-def main():
-    """Основная функция для управления мебелью."""
-    library = []
-
-    # Загрузка начальных данных из JSON файла
-    data = load_furniture_from_json("furniture.json")
-    for item in data:
-        add_furniture(library, item)
-
-    while True:
-        mode = int(input("Выберите команду:\n1) ДОБАВИТЬ\n2) УДАЛИТЬ\n3) ПЕЧАТЬ\n4) ВЫХОД\n"))
-        if mode == 1:
-            furniture_type = input("Введите тип мебели для добавления (стол/стул/шкаф): ").lower()
-            manufacturer = input("Введите производителя: ")
-            price = int(input("Введите цену: "))
-            if furniture_type == "стол":
-                material = input("Введите материал: ")
-                shape = input("Введите форму: ")
-                library.append(Table(price, manufacturer, material, shape))
-            elif furniture_type == "стул":
-                material = input("Введите материал: ")
-                adjustable_height = input("Регулируется ли высота? (да/нет): ").lower() == 'да'
-                library.append(Chair(price, manufacturer, material, adjustable_height))
-            elif furniture_type == "шкаф":
-                material = input("Введите материал: ")
-                num_shelves = int(input("Введите количество полок: "))
-                library.append(Cabinet(price, manufacturer, num_shelves, material))
-            else:
-                print("Неизвестный тип мебели.")
-        elif mode == 2:
-            index = int(input("Введите индекс мебели для удаления: "))
-            if 0 <= index < len(library):
-                del library[index]
-                print("Мебель удалена.")
-            else:
-                print("Неверный индекс.")
-        elif mode == 3:
-            print_furniture(library)
-        elif mode == 4:
-            break
-        else:
-            print("Неверная команда.")
-
-
 if __name__ == "__main__":
-    main()
-
+    main()    
