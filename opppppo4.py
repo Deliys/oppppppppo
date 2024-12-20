@@ -49,13 +49,6 @@ class TestParseCommand(unittest.TestCase):
         self.library = parse_command(self.library, command)
         self.assertEqual(len(self.library), 1)
 
-    def test_unknown_type(self):
-        command = "ADD DESK 800 IKEA Wood"
-        capturedOutput = io.StringIO()
-        sys.stdout = capturedOutput
-        result = parse_command(self.library, command)
-        sys.stdout = sys.__stdout__
-        self.assertEqual(capturedOutput.getvalue(), "Неизвестный тип мебели.\n")
 
     def test_print_command(self):#тест вывода
         self.library.append(Table(1000, "IKEA", "Wood", "Round"))
@@ -67,6 +60,22 @@ class TestParseCommand(unittest.TestCase):
         self.assertEqual(len(self.library), 1)
         self.assertIn("Стол", capturedOutput.getvalue())
         self.assertIn("Всего предметов: 1", capturedOutput.getvalue())
+
+
+
+    def test_unknown_type(self):#неизвестный тип мебели
+        command = "ADD DESK 800 IKEA Wood"
+        capturedOutput = io.StringIO()
+        sys.stdout = capturedOutput
+        result = parse_command(self.library, command)
+        sys.stdout = sys.__stdout__
+        self.assertEqual(capturedOutput.getvalue(), "Неизвестный тип мебели.\n")
+        
+    def test_literr_in_price(self):#тест на буквы в цене .их не должно быть 
+        command = "ADD CHAIR уац IKEA Plastic TRUE"
+        print(parse_command(self.library, command))
+        self.assertIn("ne int", parse_command(self.library, command))
+        
 
 
 class OfficeFurniture:
@@ -118,6 +127,8 @@ def parse_command(library, command):
     """парсер команд из файлика"""
     parts = command.split()
     if parts[0] == "ADD":
+        if parts[2].isnumeric() == False:
+            return "ne int"   
         if parts[1] == "TABLE":
             library.append(Table(int(parts[2]), parts[3], parts[4], parts[5]))
         elif parts[1] == "CHAIR":
