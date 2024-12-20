@@ -34,10 +34,9 @@ class Cabinet(OfficeFurniture):
         print(f"Шкаф: Количество полок: {self.num_shelves}, Материал: {self.material}, Цена: {self.price}, Производитель: {self.manufacturer}")
 
 def parse_command(library, command):
+
     parts = command.split()
     if parts[0] == "ADD":
-        if type(parts[2]) != int:
-            return "ne int"        
         if parts[1] == "TABLE":
             library.append(Table(int(parts[2]), parts[3], parts[4], parts[5]))
         elif parts[1] == "CHAIR":
@@ -55,14 +54,6 @@ def parse_command(library, command):
             library = [furniture for furniture in library if not (isinstance(furniture, Cabinet) and furniture.price == int(parts[2]))]
         else:
             print("Неизвестный тип мебели.")
-            print("Неизвестный тип мебели.")
-    elif parts[0] == "REMN":
-        h = []
-        for i in library:
-            if i.manufacturer == parts[1]:
-                h.append(library.index(i))
-        for i in h[::-1]:library.pop(i)
-
     elif parts[0] == "PRINT":
         for index, furniture in enumerate(library):
             print(f"{index}. ", end="")
