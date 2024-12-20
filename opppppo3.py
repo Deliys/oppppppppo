@@ -1,5 +1,5 @@
-
 class OfficeFurniture:
+    """основа фигуры"""
     def __init__(self, price, manufacturer):
         self.price = price
         self.manufacturer = manufacturer
@@ -7,34 +7,44 @@ class OfficeFurniture:
         pass
 
 class Table(OfficeFurniture):
+    "столик"
     def __init__(self, price, manufacturer, material, shape):
         super().__init__(price, manufacturer)
         self.material = material
         self.shape = shape
 
     def print_info(self):
-        print(f"Стол: Материал: {self.material}, Форма: {self.shape}, Цена: {self.price}, Производитель: {self.manufacturer}")
+        print(f"Стол: Материал: {self.material},\
+                Форма: {self.shape}, Цена: {self.price},\
+                Производитель: {self.manufacturer}")
 
 class Chair(OfficeFurniture):
+    """стул"""
     def __init__(self, price, manufacturer, material, adjustable_height):
         super().__init__(price, manufacturer)
         self.material = material
         self.adjustable_height = adjustable_height
 
     def print_info(self):
-        print(f"Стул: Материал: {self.material}, Регулируемая высота: {self.adjustable_height}, Цена: {self.price}, Производитель: {self.manufacturer}")
+        print(f"Стул: Материал: {self.material},\
+                Регулируемая высота: {self.adjustable_height},\
+                Цена: {self.price}, Производитель: {self.manufacturer}")
 
 class Cabinet(OfficeFurniture):
+    """шкаф"""
     def __init__(self, price, manufacturer, num_shelves, material):
         super().__init__(price, manufacturer)
         self.num_shelves = num_shelves
         self.material = material
 
     def print_info(self):
-        print(f"Шкаф: Количество полок: {self.num_shelves}, Материал: {self.material}, Цена: {self.price}, Производитель: {self.manufacturer}")
+        print(f"Шкаф: Количество полок: {self.num_shelves},\
+                Материал: {self.material},\
+                Цена: {self.price},\
+                Производитель: {self.manufacturer}")
 
 def parse_command(library, command):
-
+    """парсер команд из файлика"""
     parts = command.split()
     if parts[0] == "ADD":
         if parts[1] == "TABLE":
@@ -62,6 +72,7 @@ def parse_command(library, command):
     return library
 
 def read_commands(file_path):
+    """читалка команд из файла"""
     library = []
     with open(file_path, 'r', encoding='utf-8') as file:
         for line in file:
@@ -77,5 +88,4 @@ def main():
     print(f"Всего предметов: {len(library)}")
 
 if __name__ == "__main__":
-    main()
-
+    main()    
